@@ -2,7 +2,6 @@ package cn.hanasaka.network.service
 
 import cn.hanasaka.network.model.PixivResponse
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Query
 
 /**

@@ -38,13 +38,13 @@ data class IllustImage(
     val illust_image_height: String
 )
 
-@Serializable
-data class MangaA(
-    val page: Int,
-    val url: String,
-    val url_small: String,
-    val url_big: String,
-)
+//@Serializable
+//data class MangaA(
+//    val page: Int,
+//    val url: String,
+//    val url_small: String,
+//    val url_big: String,
+//)
 
 @Serializable
 data class Author(
