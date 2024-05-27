@@ -14,6 +14,10 @@ object NetworkModule {
     private val _proxyAddress = InetSocketAddress(Config.PROXY_HOST, Config.PROXY_PORT)
     private val _proxy = Proxy(Proxy.Type.HTTP, _proxyAddress)
 
+    /**
+     * 提供OkHttpClient的CallFactory
+     * @return OkHttpClient
+     */
     fun provideOkHttpClientCallFactory() : OkHttpClient =
         OkHttpClient.Builder()
             .connectTimeout(5, TimeUnit.SECONDS)
@@ -21,6 +25,11 @@ object NetworkModule {
             .writeTimeout(5, TimeUnit.SECONDS)
             .proxy(_proxy)
             .build()
+
+    /**
+     * 提供Json解析器
+     * @return Json
+     */
     fun provideNetworkJson(): Json = Json {
         ignoreUnknownKeys = true
     }

@@ -1,35 +1,76 @@
 package cn.hanasaka.network.datasource
 
-import cn.hanasaka.network.model.PixivResponse
+import cn.hanasaka.model.IllustResponse
+import cn.hanasaka.model.SearchArtworksResponse
+import cn.hanasaka.model.SearchIllustrationResponse
+import cn.hanasaka.model.SearchMangaResponse
 import cn.hanasaka.network.module.NetworkModule
 import cn.hanasaka.network.service.PixivApiService
 import cn.hanasaka.network.utils.Config
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
-import retrofit2.http.Query
 
 /**
  *  获取Pixiv作品详情的数据源的单例对象
  */
 
-//TODO: 添加搜索模块，能够通过tag、画师uid等获取作品详情
 object PixivDataSource {
-    private val _service = Retrofit.Builder()
-        .baseUrl(Config.BASE_URL)
-        .callFactory(NetworkModule.provideOkHttpClientCallFactory())
-        .addConverterFactory(
-            NetworkModule.provideNetworkJson()
-                .asConverterFactory("application/json".toMediaType())
-        )
-        .build()
-        .create(PixivApiService::class.java)
+	private val _service = Retrofit.Builder()
+		.baseUrl(Config.BASE_URL)
+		.callFactory(NetworkModule.provideOkHttpClientCallFactory())
+		.addConverterFactory(
+			NetworkModule.provideNetworkJson()
+				.asConverterFactory("application/json".toMediaType())
+		)
+		.build()
+		.create(PixivApiService::class.java)
 
-    /**
-     *  通过Pid获取Pixiv作品详情的Json数据
-     *  @param pid 作品的pid
-     */
-    suspend fun getPixivResponseByPid(
-        @Query("illust_id") pid: String
-    ): PixivResponse = _service.getIllustDetailsByPid(pid)
+	/**
+	 *  通过Pid获取Pixiv作品详情的实现
+	 *  @param pid 作品的pid
+	 *  @return IllustResponse
+	 */
+	suspend fun getPixivResponseByPid(
+		pid: String,
+	): IllustResponse = _service.getIllustDetailsByPid(pid)
+
+	/**
+	 *  搜索插画的实现
+	 *  @param path 搜索类型
+	 *  @param word 关键词
+	 *  @param options post请求响应体
+	 *  @return SearchIllustrationResponse
+	 */
+	suspend fun searchIllust(
+		path: String,
+		word: String,
+		options: Map<String, String>,
+	): SearchIllustrationResponse = _service.searchIllust(path, word, options)
+
+	/**
+	 *  搜索漫画的实现
+	 *  @param path 搜索类型
+	 *  @param word 关键词
+	 *  @param options post请求响应体
+	 *  @return SearchMangaResponse
+	 */
+	suspend fun searchManga(
+		path: String,
+		word: String,
+		options: Map<String, String>,
+	): SearchMangaResponse = _service.searchManga(path, word, options)
+
+	/**
+	 * 搜索作品的实现
+	 * @param path 搜索类型
+	 * @param word 关键词
+	 * @param options post请求响应体
+	 * @return SearchArtworksResponse
+	 */
+	suspend fun searchArtworks(
+		path: String,
+		word: String,
+		options: Map<String, String>,
+	): SearchArtworksResponse = _service.searchArtworks(path, word, options)
 }

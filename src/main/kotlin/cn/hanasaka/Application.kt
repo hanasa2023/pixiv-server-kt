@@ -2,14 +2,13 @@ package cn.hanasaka
 
 import cn.hanasaka.plugins.*
 import io.ktor.server.application.*
-import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import io.ktor.server.plugins.autohead.*
 
-fun main() {
-    embeddedServer(Netty, port = 3836, host = "0.0.0.0", module = Application::module)
-        .start(wait = true)
-}
+fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.module() {
-    configureRouting()
+	install(AutoHeadResponse)
+	configureRouting()
+	configureSerialization()
 }

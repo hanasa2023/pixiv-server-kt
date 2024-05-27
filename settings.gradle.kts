@@ -1,1 +1,1 @@
-rootProject.name = "pixiv-client-kt"
+rootProject.name = "pixiv-server-kt"
