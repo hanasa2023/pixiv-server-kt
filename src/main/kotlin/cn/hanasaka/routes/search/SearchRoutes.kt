@@ -31,6 +31,7 @@ fun Route.searchRouting() {
 				"mode" to restrictType[postBody.restrict]!!
 			)
 
+			//TODO: 优化代码结构，改良复用(你都用kotlin了还写这么愚蠢的代码……)
 			try {
 				when (postBody.type) {
 					"illust" -> {
